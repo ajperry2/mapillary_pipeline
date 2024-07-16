@@ -17,20 +17,20 @@ install:          ## Install the project in dev mode.
 
 .PHONY: fmt
 fmt:              ## Format code using black & isort.
-	$(ENV_PREFIX)isort template_pipeline/
-	$(ENV_PREFIX)black -l 79 template_pipeline/
+	$(ENV_PREFIX)isort mapillary_pipeline/
+	$(ENV_PREFIX)black -l 79 mapillary_pipeline/
 	$(ENV_PREFIX)black -l 79 tests/
 
 .PHONY: lint
 lint:             ## Run pep8, black, mypy linters.
-	$(ENV_PREFIX)flake8 template_pipeline/
-	$(ENV_PREFIX)black -l 79 --check template_pipeline/
+	$(ENV_PREFIX)flake8 mapillary_pipeline/
+	$(ENV_PREFIX)black -l 79 --check mapillary_pipeline/
 	$(ENV_PREFIX)black -l 79 --check tests/
-	$(ENV_PREFIX)mypy --ignore-missing-imports template_pipeline/
+	$(ENV_PREFIX)mypy --ignore-missing-imports mapillary_pipeline/
 
 .PHONY: test
 test: lint        ## Run tests and generate coverage report.
-	$(ENV_PREFIX)pytest -v --cov-config .coveragerc --cov=template_pipeline -l --tb=short --maxfail=1 tests/
+	$(ENV_PREFIX)pytest -v --cov-config .coveragerc --cov=mapillary_pipeline -l --tb=short --maxfail=1 tests/
 	$(ENV_PREFIX)coverage xml
 	$(ENV_PREFIX)coverage html
 
@@ -69,9 +69,9 @@ virtualenv:       ## Create a virtual environment.
 release:          ## Create a new tag for release.
 	@echo "WARNING: This operation will create s version tag and push to github"
 	@read -p "Version? (provide the next x.y.z semver) : " TAG
-	@echo "$${TAG}" > template_pipeline/VERSION
+	@echo "$${TAG}" > mapillary_pipeline/VERSION
 	@$(ENV_PREFIX)gitchangelog > HISTORY.md
-	@git add template_pipeline/VERSION HISTORY.md
+	@git add mapillary_pipeline/VERSION HISTORY.md
 	@git commit -m "release: version $${TAG} 🚀"
 	@echo "creating git tag : $${TAG}"
 	@git tag $${TAG}
@@ -85,14 +85,13 @@ docs:             ## Build the documentation.
 	URL="site/index.html"; xdg-open $$URL || sensible-browser $$URL || x-www-browser $$URL || gnome-open $$URL || open $$URL
 
 .PHONY: launch
-launch:             ## Build the documentation.
-	@if [ ! -d ./.venv ]; then echo "creating virtualenv ..." && python3 -m venv .venv && ./.venv/bin/pip install; fi
+launch:             ## Launch a pipeline
+	@if [ ! -d ./.venv ]; then echo "creating virtualenv ..." && python3 -m venv .venv && ./.venv/bin/pip install -q; fi
 	@echo "Installing Dependencies ..."
-	@./.venv/bin/pip install -e .
-	@env
-	@./.venv/bin/template_pipeline # Running the main script from the virtual environment
+	@./.venv/bin/pip install -q -e .
+	@./.venv/bin/mapillary_pipeline $(pipeline) $(optional_args) # Running the main script from the virtual environment
 
-# This project has been generated from ajperry2/template_pipeline
+# This project has been generated from ajperry2/mapillary_pipeline
 # __author__ = 'Alan Perry'
-# __repo__ = https://github.com/ajperry2/template_pipeline
+# __repo__ = https://github.com/ajperry2/mapillary_pipeline
 # __sponsor__ = https://github.com/sponsors/ajperry2/

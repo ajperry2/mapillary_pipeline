@@ -4,4 +4,5 @@
 # or run `make init` to create this file automatically based on the template.
 # You can also run `make switch-to-poetry` to use the poetry package manager.
 kfp>=2.0.0,<3
+kfp[kubernetes]
 python-dotenv

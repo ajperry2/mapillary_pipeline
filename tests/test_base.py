@@ -1,4 +1,4 @@
-from template_pipeline.base import NAME
+from mapillary_pipeline.base import NAME
 
 
 def test_base():

@@ -30,17 +30,17 @@ def read_requirements(path):
 
 
 setup(
-    name="template_pipeline",
-    version=read("template_pipeline", "VERSION"),
+    name="mapillary_pipeline",
+    version=read("mapillary_pipeline", "VERSION"),
     description="Awesome template_pipeline created by ajperry2",
-    url="https://github.com/ajperry2/template_pipeline/",
+    url="https://github.com/ajperry2/mapillary_pipeline/",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     author="ajperry2",
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
     entry_points={
-        "console_scripts": ["template_pipeline = template_pipeline.__main__:main"]
+        "console_scripts": ["mapillary_pipeline = mapillary_pipeline.__main__:main"]
     },
     extras_require={"test": read_requirements("requirements-test.txt")},
 )
